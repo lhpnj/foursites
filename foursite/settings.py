@@ -25,13 +25,13 @@ SECRET_KEY = '#zf!hpu^uvu*(oig6aat!zg%%__8n_tz^0cv@gi+3sh13tl$&g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 # Application definition
 SITE_ID = 1
 
 INSTALLED_APPS = [
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.postgres',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,15 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = 'witty98@126.com'
 EMAIL_HOST_PASSWORD = '15887180194@lhp'
 DEFAULT_FROM_EMAIL = 'witty98@126.com'
+
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]

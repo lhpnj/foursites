@@ -1,0 +1,47 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/semantic.min.css' %}">
+    <script src="{% static 'js/jquer.min.js' %}"></script>
+    <script src="{% static 'js/semantic.min.js' %}"></script>
+    <script src="{% static 'js/blog.js' %}"></script>
+</head>
+
+<body>
+    <div id="header">
+        <span class="logo">Bookmarks</span>
+        {% if request.user.is_authenticated %}
+        <ul class="ui menu">
+            <li {% if section == 'dashboard' %}class="selected" {% endif %}><a href="{% url 'dashboard' %}">My
+                    dashboard</a></li>
+            <li {% if section == 'images' %}class="selected" {% endif %}><a href="#">Images</a></li>
+            <li {% if section == 'people' %}class="selected" {% endif %}><a href="#">People</a></li>
+        </ul>
+        {% endif %}
+
+        <span class="user">
+            {% if request.user.is_authenticated %}
+            Hello {{ request.user.first_name }},{{ request.user.username }},<a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}">Log-in</a>
+
+            {% endif %}
+        </span>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message|safe }}<a href="#" class="close">X</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>
